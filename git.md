@@ -5,3 +5,8 @@
 2. make 
 3. make clean
 4. sudo make prefix=/usr/local/Cellar/git/1.7.12.1 install 
+
+## Working with git subtree
+
+
+## using https without confirming the pw every time
