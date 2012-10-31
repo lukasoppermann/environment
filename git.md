@@ -50,4 +50,5 @@ open file and copy key
 4. ...
 
 
-## using https without confirming the pw every time
+## git reset to origin master
+git reset --hard origin/master
