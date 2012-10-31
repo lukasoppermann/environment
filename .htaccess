@@ -1,7 +1,7 @@
 # Htaccess to point URL to subfolder
 
 ###############################################################
-		# Rewrite for veare
+# Rewrite for veare
 # 
 # rewrite plain url with no params
 RewriteCond %{HTTP_HOST} ^(www.)?vea.re$ [NC]
