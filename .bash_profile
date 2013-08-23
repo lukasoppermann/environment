@@ -61,9 +61,16 @@ alias add="git add"
 alias ca="git commit -am"
 alias ck="git checkout"
 alias b="git branch"
-alias tag="git tag -a"
-function dtag {
-    git tag -d $1; git push origin :refs/tags/$1
+# add tag with t tagname or remove eith t -tagname
+t(){
+    if [[ $1 == -* ]] ;
+    then
+        git tag -d ${1:1}
+        git push origin :refs/tags/${1:1}
+    else
+        git tag $1
+    fi
+
 }
 alias show="git show"
 alias log="git reflog"
