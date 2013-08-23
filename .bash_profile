@@ -22,6 +22,8 @@ alias lynx="open -a Lynxlet"
 # other aliases
 alias unhide="defaults write com.apple.finder AppleShowAllFiles TRUE; killall Finder"
 alias hide="defaults write com.apple.finder AppleShowAllFiles FALSE; killall Finder"
+alias top="top -o cpu"
+alias .="open ."
 
 # alias to projects
 alias taskd="cd ~/projects/taskd/prototype"
