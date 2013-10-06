@@ -1,0 +1,134 @@
+# Change working directory to the top-most Finder window location
+function cdf() { # short for `cdfinder`
+	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')"
+}
+
+# Use Git’s colored diff when available
+hash git &>/dev/null
+if [ $? -eq 0 ]; then
+	function diff() {
+		git diff --no-index --color-words "$@"
+	}
+fi
+
+# Start a PHP server from a directory, optionally specifying the port
+# (Requires PHP 5.4.0+.)
+function server() {
+	local port="${1:-8000}"
+	local ip=$(ipconfig getifaddr en1)
+	sleep 1 && open "http://${ip}:${port}/" &
+	php -S "${ip}:${port}"
+}
+
+# reload file
+function reload {
+	if [[ $1 == "" ]] ; then
+		source ~/.bash_profile
+	elif [ -f ~/.${1#.} ]; then
+		source ~/.${1#.}
+	elif [ -f $dotFilePath.${1#.} ]; then
+		source $dotFilePath.$1
+	else
+		echo "File not found in: ~/.${1#.} and $dotFilePath.${1#.} not found."
+	fi	
+}
+
+# Create a new directory and enter it
+function mkd() {
+	mkdir -p "$@" && cd "$@"
+}
+
+# make directory
+function mk { ≤
+	if [ "$2" = "-empty" ] || [ "$3" = "-empty" ]; then
+		mkdir $1
+		cd $1
+		wget https://raw.github.com/lukasoppermann/base-setup/master/.gitignore
+		echo "# $1" > readme.md
+	else
+		git clone https://github.com/lukasoppermann/base-setup.git $1
+		cd $1
+		rm -rf .git
+		rm readme.md
+		echo "# $1" > readme.md
+		cd layout
+		rm -rf readme.md
+		cd ../media
+		rm -rf readme.md
+		cd ..
+		
+		if [ "$2" != "" ]; then
+			git init
+			git add .
+			git commit -m 'init'
+			git remote add origin $2
+			git push -u origin master
+		fi
+	fi
+	
+	open .
+}
+
+# add ignore file from github to this repo
+function ignore {
+	wget https://raw.github.com/lukasoppermann/base-setup/master/.gitignore
+	clear
+}
+
+# make file
+function .php { 
+	touch $1.php 
+}
+function .css { 
+	touch $1.css 
+}
+function css { 
+	touch $1.css 
+}
+function .js { 
+	touch $1.js 
+}
+function js { 
+	touch $1.js 
+}
+
+# `m` with no arguments opens the current directory in TextMate, otherwise
+# opens the given location
+function m() {
+	if [ $# -eq 0 ]; then
+		mate .
+	else
+		mate "$@"
+	fi
+}
+
+# `s` with no arguments opens the current directory in Sublime Text, otherwise
+# opens the given location
+function s() {
+	if [ $# -eq 0 ]; then
+		subl .
+	else
+		subl "$@"
+	fi
+}
+
+# `v` with no arguments opens the current directory in Vim, otherwise opens the
+# given location
+function v() {
+	if [ $# -eq 0 ]; then
+		vim .
+	else
+		vim "$@"
+	fi
+}
+
+# `o` with no arguments opens current directory, otherwise opens the given
+# location
+alias ,="o"
+function o() {
+	if [ $# -eq 0 ]; then
+		open .
+	else
+		open "$@"
+	fi
+}
