@@ -33,6 +33,15 @@ function reload {
 	fi	
 }
 
+# run install.sh file in current dir
+function run {
+	if [[ $1 == "" ]] ; then
+		source install.sh
+	else
+		source ${1}.sh
+  fi
+}
+
 # Opens the github page for the current git repository in your browser
 # git@github.com:jasonneylon/dotfiles.git
 # https://github.com/jasonneylon/dotfiles/
