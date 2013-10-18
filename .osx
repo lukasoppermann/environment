@@ -35,7 +35,7 @@ defaults write com.apple.menuextra.battery ShowTime -string "YES"
 defaults write com.apple.systemuiserver menuExtras -array "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" "/System/Library/CoreServices/Menu Extras/AirPort.menu" "/System/Library/CoreServices/Menu Extras/Battery.menu" "/System/Library/CoreServices/Menu Extras/Clock.menu"
 
 # Set highlight color to green
-defaults write NSGlobalDomain AppleHighlightColor -string '0.764700 0.976500 0.568600'
+# defaults write NSGlobalDomain AppleHighlightColor -string '0.764700 0.976500 0.568600'
 
 # Set sidebar icon size to medium
 defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
@@ -156,13 +156,13 @@ defaults write NSGlobalDomain KeyRepeat -int 0
 
 # Automatically illuminate built-in MacBook keyboard in low light
 defaults write com.apple.BezelServices kDim -bool true
-# Turn off keyboard illumination when computer is not used for 5 minutes
-defaults write com.apple.BezelServices kDimTime -int 300
+# Turn off keyboard illumination when computer is not used for 2 minutes
+defaults write com.apple.BezelServices kDimTime -int 120
 
 # Set language and text formats
 # Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
 # `Inches`, `en_GB` with `en_US`, and `true` with `false`.
-defaults write NSGlobalDomain AppleLanguages -array "en" "nl"
+defaults write NSGlobalDomain AppleLanguages -array "en" "de"
 defaults write NSGlobalDomain AppleLocale -string "en_GB@currency=EUR"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
@@ -201,15 +201,15 @@ sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutio
 ###############################################################################
 
 # Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
-defaults write com.apple.finder QuitMenuItem -bool true
+defaults write com.apple.finder QuitMenuItem -bool false
 
 # Finder: disable window animations and Get Info animations
 defaults write com.apple.finder DisableAllAnimations -bool true
 
 # Show icons for hard drives, servers, and removable media on the desktop
-defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
+defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool false
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
 # Finder: show hidden files by default
@@ -261,7 +261,7 @@ defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
 
 # Show item info to the right of the icons on the desktop
-/usr/libexec/PlistBuddy -c "Set DesktopViewSettings:IconViewSettings:labelOnBottom false" ~/Library/Preferences/com.apple.finder.plist
+# /usr/libexec/PlistBuddy -c "Set DesktopViewSettings:IconViewSettings:labelOnBottom false" ~/Library/Preferences/com.apple.finder.plist
 
 # Enable snap-to-grid for icons on the desktop and in other icon views
 /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
@@ -269,24 +269,24 @@ defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 
 # Increase grid spacing for icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+# /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+# /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+# /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
 
 # Increase the size of icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+# /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+# /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+# /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
 
 # Use list view in all Finder windows by default
-# Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
-defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+# Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`, 'Nlsv'
+defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
 
 # Disable the warning before emptying the Trash
 defaults write com.apple.finder WarnOnEmptyTrash -bool false
 
 # Empty Trash securely by default
-defaults write com.apple.finder EmptyTrashSecurely -bool true
+defaults write com.apple.finder EmptyTrashSecurely -bool false
 
 # Enable AirDrop over Ethernet and on unsupported Macs running Lion
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
@@ -350,7 +350,7 @@ defaults write com.apple.dock autohide-time-modifier -float 0
 #defaults write com.apple.dock no-glass -bool true
 
 # Automatically hide and show the Dock
-defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock autohide -bool false
 
 # Make Dock icons of hidden applications translucent
 defaults write com.apple.dock showhidden -bool true
@@ -359,7 +359,7 @@ defaults write com.apple.dock showhidden -bool true
 find ~/Library/Application\ Support/Dock -name "*.db" -maxdepth 1 -delete
 
 # Add iOS Simulator to Launchpad
-ln -s /Applications/Xcode.app/Contents/Applications/iPhone\ Simulator.app /Applications/iOS\ Simulator.app
+# ln -s /Applications/Xcode.app/Contents/Applications/iPhone\ Simulator.app /Applications/iOS\ Simulator.app
 
 # Add a spacer to the left side of the Dock (where the applications are)
 #defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
@@ -379,13 +379,13 @@ ln -s /Applications/Xcode.app/Contents/Applications/iPhone\ Simulator.app /Appli
 # 11: Launchpad
 # 12: Notification Center
 # Top left screen corner → Mission Control
-defaults write com.apple.dock wvous-tl-corner -int 2
-defaults write com.apple.dock wvous-tl-modifier -int 0
+# defaults write com.apple.dock wvous-tl-corner -int 2
+# defaults write com.apple.dock wvous-tl-modifier -int 0
 # Top right screen corner → Desktop
-defaults write com.apple.dock wvous-tr-corner -int 4
-defaults write com.apple.dock wvous-tr-modifier -int 0
+# defaults write com.apple.dock wvous-tr-corner -int 4
+# defaults write com.apple.dock wvous-tr-modifier -int 0
 # Bottom left screen corner → Start screen saver
-defaults write com.apple.dock wvous-bl-corner -int 5
+defaults write com.apple.dock wvous-bl-corner -int 4
 defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ###############################################################################
@@ -425,39 +425,6 @@ defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebK
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
 ###############################################################################
-# iTunes (pre-iTunes 11 only)                                                 #
-###############################################################################
-
-# Disable the iTunes store link arrows
-defaults write com.apple.iTunes show-store-link-arrows -bool false
-
-# Disable the Genius sidebar in iTunes
-defaults write com.apple.iTunes disableGeniusSidebar -bool true
-
-# Disable radio stations in iTunes
-defaults write com.apple.iTunes disableRadio -bool true
-
-# Make ⌘ + F focus the search input in iTunes
-# To use these commands in another language, browse iTunes’s package contents,
-# open `Contents/Resources/your-language.lproj/Localizable.strings`, and look
-# for `kHiddenMenuItemTargetSearch`.
-defaults write com.apple.iTunes NSUserKeyEquivalents -dict-add "Target Search Field" "@F"
-
-###############################################################################
-# Mail                                                                        #
-###############################################################################
-
-# Disable send and reply animations in Mail.app
-defaults write com.apple.mail DisableReplyAnimations -bool true
-defaults write com.apple.mail DisableSendAnimations -bool true
-
-# Copy email addresses as `foo@example.com` instead of `Foo Bar <foo@example.com>` in Mail.app
-defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
-
-# Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
-defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\\U21a9"
-
-###############################################################################
 # Spotlight                                                                   #
 ###############################################################################
 
@@ -470,11 +437,11 @@ sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Vol
 # Change indexing order and disable some file types
 defaults write com.apple.spotlight orderedItems -array \
 	'{"enabled" = 1;"name" = "APPLICATIONS";}' \
-	'{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
+	'{"enabled" = 0;"name" = "SYSTEM_PREFS";}' \
 	'{"enabled" = 1;"name" = "DIRECTORIES";}' \
 	'{"enabled" = 1;"name" = "PDF";}' \
-	'{"enabled" = 1;"name" = "FONTS";}' \
-	'{"enabled" = 0;"name" = "DOCUMENTS";}' \
+	'{"enabled" = 0;"name" = "FONTS";}' \
+	'{"enabled" = 1;"name" = "DOCUMENTS";}' \
 	'{"enabled" = 0;"name" = "MESSAGES";}' \
 	'{"enabled" = 0;"name" = "CONTACT";}' \
 	'{"enabled" = 0;"name" = "EVENT_TODO";}' \
@@ -482,9 +449,9 @@ defaults write com.apple.spotlight orderedItems -array \
 	'{"enabled" = 0;"name" = "BOOKMARKS";}' \
 	'{"enabled" = 0;"name" = "MUSIC";}' \
 	'{"enabled" = 0;"name" = "MOVIES";}' \
-	'{"enabled" = 0;"name" = "PRESENTATIONS";}' \
-	'{"enabled" = 0;"name" = "SPREADSHEETS";}' \
-	'{"enabled" = 0;"name" = "SOURCE";}'
+	'{"enabled" = 1;"name" = "PRESENTATIONS";}' \
+	'{"enabled" = 1;"name" = "SPREADSHEETS";}' \
+	'{"enabled" = 1;"name" = "SOURCE";}'
 # Load new settings before rebuilding the index
 killall mds
 # Make sure indexing is enabled for the main volume
@@ -500,10 +467,10 @@ sudo mdutil -E /
 defaults write com.apple.terminal StringEncodings -array 4
 
 # Use a modified version of the Pro theme by default in Terminal.app
-open "$HOME/init/Mathias.terminal"
-sleep 1 # Wait a bit to make sure the theme is loaded
-defaults write com.apple.terminal "Default Window Settings" -string "Mathias"
-defaults write com.apple.terminal "Startup Window Settings" -string "Mathias"
+# open "$HOME/init/Mathias.terminal"
+# sleep 1 # Wait a bit to make sure the theme is loaded
+# defaults write com.apple.terminal "Default Window Settings" -string "Mathias"
+# defaults write com.apple.terminal "Startup Window Settings" -string "Mathias"
 
 # Enable “focus follows mouse” for Terminal.app and all X11 apps
 # i.e. hover over a window and start typing in it without clicking first
@@ -515,7 +482,7 @@ defaults write com.apple.terminal "Startup Window Settings" -string "Mathias"
 ###############################################################################
 
 # Prevent Time Machine from prompting to use new hard drives as backup volume
-defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+# defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 # Disable local Time Machine backups
 hash tmutil &> /dev/null && sudo tmutil disablelocal
@@ -523,15 +490,6 @@ hash tmutil &> /dev/null && sudo tmutil disablelocal
 ###############################################################################
 # Address Book, Dashboard, iCal, TextEdit, and Disk Utility                   #
 ###############################################################################
-
-# Enable the debug menu in Address Book
-defaults write com.apple.addressbook ABShowDebugMenu -bool true
-
-# Enable Dashboard dev mode (allows keeping widgets on the desktop)
-defaults write com.apple.dashboard devmode -bool true
-
-# Enable the debug menu in iCal (pre-10.8)
-defaults write com.apple.iCal IncludeDebugMenu -bool true
 
 # Use plain text mode for new TextEdit documents
 defaults write com.apple.TextEdit RichText -int 0
@@ -569,22 +527,12 @@ defaults write com.google.Chrome.canary ExtensionInstallSources -array "https://
 defaults write ~/Library/Preferences/org.gpgtools.gpgmail SignNewEmailsByDefault -bool false
 
 ###############################################################################
-# SizeUp.app                                                                  #
-###############################################################################
-
-# Start SizeUp at login
-defaults write com.irradiatedsoftware.SizeUp StartAtLogin -bool true
-
-# Don’t show the preferences window on next start
-defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false
-
-###############################################################################
 # Transmission.app                                                            #
 ###############################################################################
 
 # Use `~/Documents/Torrents` to store incomplete downloads
-defaults write org.m0k.transmission UseIncompleteDownloadFolder -bool true
-defaults write org.m0k.transmission IncompleteDownloadFolder -string "${HOME}/Documents/Torrents"
+# defaults write org.m0k.transmission UseIncompleteDownloadFolder -bool true
+# defaults write org.m0k.transmission IncompleteDownloadFolder -string "${HOME}/Documents/Torrents"
 
 # Don’t prompt for confirmation before downloading
 defaults write org.m0k.transmission DownloadAsk -bool false
@@ -632,4 +580,3 @@ for app in "Address Book" "Calendar" "Contacts" "Dashboard" "Dock" "Finder" \
 	killall "$app" > /dev/null 2>&1
 done
 echo "Done. Note that some of these changes require a logout/restart to take effect."
-Status API Training Shop Blog About
