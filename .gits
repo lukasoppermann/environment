@@ -1,0 +1,20 @@
+# git alias
+alias status="git status"
+alias st="git status"
+alias commit="git commit"
+alias clone="git clone"
+alias cm="git commit -m"
+cur_git_branch() {
+	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+alias push="git push --tags origin \$(cur_git_branch)"
+alias pull="git pull"
+alias add="git add"
+alias add.="git add --all"
+alias ca="git commit -am"
+alias ck="git checkout"
+alias b="git branch"
+
+alias log="git reflog"
+alias sub="git submodule"
+alias sup="git submodule foreach 'git checkout master; git pull;'"

@@ -69,7 +69,7 @@ function mkd() {
 }
 
 # make directory
-function mk { ≤
+function mk {
 	if [ "$2" = "-empty" ] || [ "$3" = "-empty" ]; then
 		mkdir $1
 		cd $1
@@ -99,10 +99,20 @@ function mk { ≤
 	open .
 }
 
+# initialize git repo
+function init {
+  git init
+	git add .
+	git commit -m 'init'
+	git remote add origin $1
+	git push -u origin master
+}
+
+
 # add ignore file from github to this repo
 function ignore {
 	wget https://raw.github.com/lukasoppermann/base-setup/master/.gitignore
-	clear
+  # clear
 }
 
 # make file
