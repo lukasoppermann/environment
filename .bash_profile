@@ -2,7 +2,7 @@
 export PATH="$HOME/bin:$PATH"
 
 # php ini
-export PATH=/Applications/MAMP/bin/php/php5.4.10/bin:$PATH
+# export PATH=/Applications/MAMP/bin/php/php5.4.10/bin:$PATH
 
 # Load the shell dotfiles, and then some:
 dotFilePath="/Users/lukasoppermann/Projects/knowledge-base/"
