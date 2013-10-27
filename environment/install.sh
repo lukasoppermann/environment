@@ -52,11 +52,27 @@ echo "$apachecnf" | sudo tee /etc/apache2/httpd.conf.tmp > /dev/null
 sudo mv /etc/apache2/httpd.conf.tmp /etc/apache2/httpd.conf
 END
 # Ask for virtual host name 
-read -p 'Enter your vhost name e.g. www or username.local ' virtualHost
+read -p 'Enter your vhost name (e.g. www or username.local): ' virtualHost
 virtualHost=$(echo $virtualHost | tr '[:upper:]' '[:lower:]')
 virtualHost=$(sed "s/[^a-z.|0-9\-]//g;" <<< $virtualHost)
 echo "Your virtual Host name is: "$virtualHost
 
+# check for directory to use as root
+if [[ -d "$HOME/Sites" ]] ; then
+  rootDir="$HOME/Sites"
+elif [[ -d "$HOME/WebSites" ]] ; then
+  rootDir="$HOME/WebSites"
+elif [[ -d "$HOME/Projects" ]]; then
+  rootDir="$HOME/Projects"
+else
+  read -p 'Enter a name for your web root containing all websites: ' rootFolder
+  mkdir -p "$HOME/$rootFolder"
+  rootDir="$HOME/$rootFolder"
+fi
+echo "Your web root is: "$rootDir
+
+# write virtual hosts file
+echo $'\n'"<VirtualHost *:80>"$'\n\t'"DocumentRoot \"/Library/WebServer/Documents\""$'\n'"</VirtualHost>"$'\n'"<VirtualHost *:80>"$'\n\t'"DocumentRoot \"$rootDir\""$'\n\t'"ServerName $virtualHost"$'\n\t'"ErrorLog \"/private/var/log/apache2/$virtualHost-error_log\""$'\n\t'"CustomLog \"/private/var/log/apache2/$virtualHost-access_log\" common"$'\n\n\t'"<Directory \"$rootDir\">"$'\n\t\t'"AllowOverride All"$'\n\t\t'"Order allow,deny"$'\n\t\t'"Allow from all"$'\n\t'"</Directory>"$'\n'"</VirtualHost>" | sudo tee -a /etc/apache2/extra/httpd-vhosts.conf
 
 # timeout sudo
 # sudo -k
