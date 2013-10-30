@@ -175,7 +175,7 @@ function v() {
 
 # `o` with no arguments opens current directory, otherwise opens the given
 # location
-alias ,="o"
+alias ,="o" 
 function o() {
 	if [ $# -eq 0 ]; then
 		open .
