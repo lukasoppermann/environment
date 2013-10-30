@@ -1,6 +1,9 @@
 # Setup Dev environment
 # Ask for the administrator password upfront
 : <<'END'
+# tell the script to setup aliases in bash_profile
+make_aliases=FALSE;
+
 echo "This script needs Administrator privileges to edit some files in the /etc directory.";
 sudo -v
 # Keep-alive: update existing `sudo` time stamp until `install.sh` has finished
@@ -18,9 +21,6 @@ else
 fi
 # check for git
 which -s git || brew install git
-
-# tell the script to setup aliases in bash_profile
-make_aliases=FALSE;
 
 # setup aliases
 if [[ $make_aliases == TRUE ]] ; then
