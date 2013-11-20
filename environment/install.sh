@@ -74,5 +74,7 @@ echo "Your web root is: "$rootDir
 # write virtual hosts file
 echo $'\n'"<VirtualHost *:80>"$'\n\t'"DocumentRoot \"/Library/WebServer/Documents\""$'\n'"</VirtualHost>"$'\n'"<VirtualHost *:80>"$'\n\t'"DocumentRoot \"$rootDir\""$'\n\t'"ServerName $virtualHost"$'\n\t'"ErrorLog \"/private/var/log/apache2/$virtualHost-error_log\""$'\n\t'"CustomLog \"/private/var/log/apache2/$virtualHost-access_log\" common"$'\n\n\t'"<Directory \"$rootDir\">"$'\n\t\t'"AllowOverride All"$'\n\t\t'"Order allow,deny"$'\n\t\t'"Allow from all"$'\n\t'"</Directory>"$'\n'"</VirtualHost>" | sudo tee -a /etc/apache2/extra/httpd-vhosts.conf
 
+## etc/hosts
+
 # timeout sudo
 # sudo -k
