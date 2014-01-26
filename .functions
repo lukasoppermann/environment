@@ -15,8 +15,7 @@ function cdf() { # short for `cdfinder`
 }
 
 alias wake="coffee";
-alias coffee="mate";
-function mate {
+function coffee {
   echo "Mac will stay awake. Quite drinking Mate by pressing ctrl + c";
   pmset noidle
 }
