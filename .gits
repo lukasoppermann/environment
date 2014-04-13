@@ -1,6 +1,6 @@
 # git alias
 alias status="git status"
-alias st="git status"
+alias st="git status --ignore-submodules"
 alias commit="git commit"
 alias clone="git clone"
 alias cm="git commit -m"
@@ -33,3 +33,5 @@ alias sup="git submodule foreach 'git checkout master; git pull;'"
 alias svn.="svn add --force ."
 alias svnd="for i in $(svn st | grep \! | awk '{print $2}'); do svn delete $i@; done;"
 alias svn-="svn delete"
+alias scm="svn commit -m 'updating'"
+
