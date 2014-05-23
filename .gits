@@ -31,7 +31,9 @@ alias sup="git submodule foreach 'git checkout master; git pull;'"
 
 # svn
 alias svn.="svn add --force ."
-alias svnd="for i in $(svn st | grep \! | awk '{print $2}'); do svn delete $i@; done;"
+function svnd {
+  svn status | grep '^\!' | cut -c8- | while read f; do svn rm "$f@"; done
+}
 alias svn-="svn delete"
 alias scm="svn commit -m 'updating'"
 

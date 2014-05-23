@@ -80,6 +80,19 @@ function gh() {
   open $giturl
 }
 
+# Checks and opens readme
+function rd() {
+  if [ -f "readme.md" ]
+  then
+    open -a "/Applications/iA Writer.app" "readme.md"
+  elif [ -f "../readme.md" ]
+  then
+    open -a "/Applications/iA Writer.app" "../readme.md"
+  else
+    echo "readme.md not found."
+  fi
+}
+
 # Create a new directory and enter it
 function mkd() {
 	mkdir -p "$@" && cd "$@"
