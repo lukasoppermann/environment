@@ -37,3 +37,20 @@ function svnd {
 alias svn-="svn delete"
 alias scm="svn commit -m 'updating'"
 
+# clone down issues
+function issues {
+	hand=~/projects/knowledge-base/handkerchief/handkerchief.py
+	if [[ $1 != "" ]] ; then
+    python $hand $1 -t default.template
+	else
+    repo=$(git remote -v | head -n1 | awk '{print $2}' | sed -e 's,.*:\(.*/\)\?,,' -e 's/\.git$//')
+    if [[ $repo == *https://* ]] ; then
+      python $hand ${repo#https://github.com/} -t default.template
+    elif [[ $repo == *git@github.com* ]] ; then
+      python $hand ${repo#git@github.com:}
+    else
+      echo "Provide parameter"
+    fi
+	fi
+}
+
