@@ -13,8 +13,6 @@ log-
 images/
 movies/
 files/
-# db files #
-# */config/database.php
 
 application/cache/*
 !application/cache/index.html
@@ -24,6 +22,10 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 
+# secrets #
+############
+database.php
+.secrects
 
 # Packages #
 ############
