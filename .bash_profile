@@ -8,7 +8,7 @@ export PATH="$HOME/bin:$PATH"
 dotFilePath="/Users/lukasoppermann/Projects/knowledge-base/"
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
-for file in $dotFilePath.{path,bash_prompt,exports,aliases,functions,extra,gits}; do
+for file in $dotFilePath.{path,bash_prompt,secrets,exports,aliases,functions,extra,gits}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file"
 done
 unset file

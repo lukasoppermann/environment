@@ -47,5 +47,13 @@ function parse_git_branch() {
 	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
 }
 
+# Use Git’s colored diff when available
+hash git &>/dev/null
+if [ $? -eq 0 ]; then
+	function diff() {
+		git diff --no-index --color-words "$@"
+	}
+fi
+
 export PS1="\[${BOLD}${MAGENTA}\]\u \[$GREEN\]\w\[$RESET\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" [\")\[$ORANGE\]\$(parse_git_branch)\[$RESET\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \"]\") \[$ORANGE\]❯ \[$RESET\]"
 export PS2="\[$ORANGE\]→ \[$RESET\]"
