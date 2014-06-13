@@ -7,7 +7,15 @@ alias cm="git commit -m"
 cur_git_branch() {
 	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
-alias push="git push --tags origin \$(cur_git_branch)"
+# push
+function push {
+  if [[ $1 == "tags" || $1 == "tag" ]]; then
+    git push --tags origin $(cur_git_branch)
+  else
+    git push origin $(cur_git_branch)
+  fi
+}
+
 alias pull="git pull"
 alias rebase="git rebase -i"
 alias continue="git rebase --continue"
@@ -38,14 +46,15 @@ alias svn-="svn delete"
 alias scm="svn commit -m 'updating'"
 
 # clone down issues
+alias handkerchief=~"/projects/knowledge-base/handkerchief/handkerchief.py"
 function issues {
 	hand=~/projects/knowledge-base/handkerchief/handkerchief.py
 	if [[ $1 != "" ]] ; then
-    python $hand $1 -t default.template
+    python $hand $1
 	else
     repo=$(git remote -v | head -n1 | awk '{print $2}' | sed -e 's,.*:\(.*/\)\?,,' -e 's/\.git$//')
     if [[ $repo == *https://* ]] ; then
-      python $hand ${repo#https://github.com/} -t default.template
+      python $hand ${repo#https://github.com/}
     elif [[ $repo == *git@github.com* ]] ; then
       python $hand ${repo#git@github.com:}
     else
