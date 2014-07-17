@@ -1,0 +1,172 @@
+# open bash files
+alias profile="nano . ~/.bash_profile"
+alias aliases="nano . $dotFilePath.aliases"
+alias gits="nano . $dotFilePath.gits"
+alias exports="nano . $dotFilePath.exports"
+
+# ssh access
+function sshcp {
+  server="ssh-373917-veare@185.21.102.106:~/"
+  echo "copying $server$1 to $2"
+  scp $server$1 $2
+}
+# laravel artisan
+alias art="php artisan"
+alias phpunit="vendor/bin/phpunit"
+alias unit="vendor/bin/phpunit --stderr"
+alias dump="composer dump-autoload & art dump-autoload"
+
+# composer update
+function composer {
+	if [[ $1 == "update" ]] ; then
+		echo "Self update:"
+		/usr/local/bin/composer self-update
+		echo "Updating packages:"
+		/usr/local/bin/composer update
+	else
+		/usr/local/bin/composer "$@"
+	fi
+}
+
+# easy navigation
+alias ~="cd ~"  # `cd` is probably faster to type though
+alias cd-="cd -" ## move to previous dir, - also works
+alias ..="cd ../../"
+alias ...="cd ../../../"
+
+# shortcuts
+alias c="clear"
+alias clrear="clear"
+alias clrea="clear"
+alias clrea="clear"
+alias k="kill"
+alias k="killall"
+
+# general directories
+alias p="cd ~/"
+
+# Detect which `ls` flavor is in use
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+	colorflag="--color"
+else # OS X `ls`
+	colorflag="-G"
+fi
+
+# list all files
+# -G -A=include hidden, but not . and ..; -F=/ after dir to mark it as such
+alias l='ls'
+alias ls='ls -GAF ${colorflag}'
+
+# List all files colorized in long format, including dot files
+alias ll="ls -laF ${colorflag}"
+
+# List only directories
+alias ld='ls -lF ${colorflag} | grep "^d"'
+
+# Enable aliases to be sudo’ed
+alias sudo='sudo '
+
+# Get week number
+alias week='date +%V'
+
+# Stopwatch
+alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+
+# IP addresses
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias lip="localip"
+alias localip="ipconfig getifaddr en1"
+alias ips="ifconfig -a | grep -o 'inet6\? \(\([0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+\)\|[a-fA-F0-9:]\+\)' | sed -e 's/inet6* //'"
+
+# Enhanced WHOIS lookups
+alias whois="whois -h whois-servers.net"
+
+############################
+# functions
+
+# reload file
+function reload {
+	if [[ $1 == "" ]] ; then
+		source ~/.bash_profile
+	elif [ -f ~/.${1#.} ]; then
+		source ~/.${1#.}
+	elif [ -f $dotFilePath.${1#.} ]; then
+		source $dotFilePath.$1
+	else
+		echo "File not found in: ~/.${1#.} and $dotFilePath.${1#.} not found."
+	fi	
+}
+
+function js {
+  if [[ -d 'js' ]]; then
+    cd 'js';
+  elif [[ -d '../js' ]]; then
+    cd '../js'
+  elif [[ -d '../../js' ]]; then
+    cd '../../js'  
+  elif [[ -d '../../../js' ]]; then
+    cd '../../../js'  
+  elif [[ -d '../public/js' ]]; then
+    cd '../public/js'
+  elif [[ -d '../../public/js' ]]; then
+    cd '../../public/js'    
+  elif [[ -d 'libs/js' ]]; then
+    cd 'libs/js'
+  elif [[ -d 'public/js' ]]; then
+    cd 'public/js'
+  elif [[ -d 'public/libs/js' ]]; then
+    cd 'public/libs/js'
+  fi    
+}
+
+function css {
+  if [[ -d 'css' ]]; then
+    cd 'css';
+  elif [[ -d '../css' ]]; then
+    cd '../css'
+  elif [[ -d '../../css' ]]; then
+    cd '../../css'  
+  elif [[ -d '../public/css' ]]; then
+    cd '../public/css'
+  elif [[ -d '../../public/css' ]]; then
+    cd '../../public/css'    
+  elif [[ -d 'libs/css' ]]; then
+    cd 'libs/css'
+  elif [[ -d 'public/css' ]]; then
+    cd 'public/css'
+  elif [[ -d 'public/libs/css' ]]; then
+    cd 'public/libs/css'
+  fi    
+}
+
+# add ignore file from github to this repo
+function ignore {
+	wget https://raw.github.com/lukasoppermann/base-setup/master/.gitignore
+}
+
+function t {
+    if [[ $1 != -* ]]; then
+      echo $1
+    fi
+}
+
+# `m` with no arguments opens the current directory in TextMate, otherwise
+# opens the given location
+function m() {
+	if [ $# -eq 0 ]; then
+		mate .
+	else
+		mate "$@"
+	fi
+}
+
+# `o` with no arguments opens current directory, otherwise opens the given
+# location
+alias ,="o" 
+function o() {
+	if [ $# -eq 0 ]; then
+		open .
+	else
+		open "$@"
+	fi
+}

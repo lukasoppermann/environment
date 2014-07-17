@@ -11,6 +11,10 @@ cur_git_branch() {
 function push {
   if [[ $1 == "tags" || $1 == "tag" ]]; then
     git push --tags origin $(cur_git_branch)
+  elif [[ $1 == "-f" && ($2 == "tag" || $2 == "tags") ]]; then
+    git push -f --tags origin $(cur_git_branch)
+  elif [[ ! -z "$1" ]]; then
+    git push $1 $(cur_git_branch)
   else
     git push origin $(cur_git_branch)
   fi
@@ -31,19 +35,13 @@ alias fetch="git fetch"
 alias conflicts="git diff --name-only --diff-filter=U"
 alias fix="git diff --name-only | uniq | xargs mate"
 alias discard="git stash save --keep-index; git stash drop"
+alias tag="git tag"
+alias tags="git tag"
 
 alias log="git log \$(cur_git_branch) --decorate --graph --oneline --date-order"
 alias hlog="git reflog"
 alias sub="git submodule"
 alias sup="git submodule foreach 'git checkout master; git pull;'"
-
-# svn
-alias svn.="svn add --force ."
-function svnd {
-  svn status | grep '^\!' | cut -c8- | while read f; do svn rm "$f@"; done
-}
-alias svn-="svn delete"
-alias scm="svn commit -m 'updating'"
 
 # clone down issues
 alias handkerchief=~"/projects/knowledge-base/handkerchief/handkerchief.py"
