@@ -1,0 +1,4 @@
+'.source.php, .source.html, .text.html.blade, .source.blade.php':
+  'echo':
+    'prefix': 'e'
+    'body': 'echo $1${0:;}'

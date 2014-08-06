@@ -1,6 +1,6 @@
 # open bash files
 alias profile="nano . ~/.bash_profile"
-alias aliases="nano . $dotFilePath.aliases"
+alias aliases="nano . $dotFilePath.server_aliases"
 alias gits="nano . $dotFilePath.gits"
 alias exports="nano . $dotFilePath.exports"
 
@@ -18,13 +18,14 @@ alias dump="composer dump-autoload & art dump-autoload"
 
 # composer update
 function composer {
+  var_composer="/usr/local/bin/composer"
 	if [[ $1 == "update" ]] ; then
 		echo "Self update:"
-		/usr/local/bin/composer self-update
+		 $var_composer self-update
 		echo "Updating packages:"
-		/usr/local/bin/composer update
+		$var_composer update
 	else
-		/usr/local/bin/composer "$@"
+		$var_composer "$@"
 	fi
 }
 
@@ -94,7 +95,7 @@ function reload {
 		source $dotFilePath.$1
 	else
 		echo "File not found in: ~/.${1#.} and $dotFilePath.${1#.} not found."
-	fi	
+	fi
 }
 
 function js {
@@ -103,20 +104,20 @@ function js {
   elif [[ -d '../js' ]]; then
     cd '../js'
   elif [[ -d '../../js' ]]; then
-    cd '../../js'  
+    cd '../../js'
   elif [[ -d '../../../js' ]]; then
-    cd '../../../js'  
+    cd '../../../js'
   elif [[ -d '../public/js' ]]; then
     cd '../public/js'
   elif [[ -d '../../public/js' ]]; then
-    cd '../../public/js'    
+    cd '../../public/js'
   elif [[ -d 'libs/js' ]]; then
     cd 'libs/js'
   elif [[ -d 'public/js' ]]; then
     cd 'public/js'
   elif [[ -d 'public/libs/js' ]]; then
     cd 'public/libs/js'
-  fi    
+  fi
 }
 
 function css {
@@ -125,18 +126,18 @@ function css {
   elif [[ -d '../css' ]]; then
     cd '../css'
   elif [[ -d '../../css' ]]; then
-    cd '../../css'  
+    cd '../../css'
   elif [[ -d '../public/css' ]]; then
     cd '../public/css'
   elif [[ -d '../../public/css' ]]; then
-    cd '../../public/css'    
+    cd '../../public/css'
   elif [[ -d 'libs/css' ]]; then
     cd 'libs/css'
   elif [[ -d 'public/css' ]]; then
     cd 'public/css'
   elif [[ -d 'public/libs/css' ]]; then
     cd 'public/libs/css'
-  fi    
+  fi
 }
 
 # add ignore file from github to this repo
@@ -162,7 +163,7 @@ function m() {
 
 # `o` with no arguments opens current directory, otherwise opens the given
 # location
-alias ,="o" 
+alias ,="o"
 function o() {
 	if [ $# -eq 0 ]; then
 		open .

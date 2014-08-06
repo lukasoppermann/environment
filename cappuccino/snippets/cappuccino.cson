@@ -1,0 +1,25 @@
+'*':
+  'HTML 5 Skeleton':
+    'prefix': 'html5'
+    'body': """
+    <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+          <meta name="author" content="${1:Lukas Oppermann – vea.re}" />
+          <meta name="description" content="$2" />
+          <meta name="robots" content="index,follow" />
+          <meta name="language" content="en" />
+          <meta content="width=device-width, initial-scale=1.0, maximum-scale=1" name="viewport">
+          <title>$3</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1,maximum-scale=1">
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+        </head>
+        <body>
+        $0
+        </body>
+      </html>
+    """
+  'Arrow right':
+    'prefix': '->'
+    'body': '➞'
