@@ -1,0 +1,351 @@
+# project directories
+alias veare="cd ~/projects/veare"
+alias fs="cd ~/projects/formandsystem"
+alias mark="cd ~/projects/mark"
+alias copra="cd ~/projects/copra"
+
+# applications
+alias tt="open /Applications/TotalTerminal.app"
+
+# open bash files
+alias profile="$EDITOR ~/.bash_profile"
+alias aliases="$EDITOR $dotFilePath.aliases;"
+alias functions=aliases
+alias gits="$EDITOR $dotFilePath.gits"
+alias exports="$EDITOR $dotFilePath.exports"
+
+# ssh access
+alias ssh-veare="ssh -p 2222 veare@vea.re"
+
+function sh {
+    echo "ssh into df server"
+    ssh $ssh_veare;
+}
+
+alias shcp=sshcp
+
+function sshcp {
+  server="$ssh_veare:~/"
+  echo "copying $1 to $server$2"
+  scp $1 $server$2
+}
+
+function sshprep {
+  # create folder structure and git repo
+  ssh $ssh_veare "mkdir -p ~/$1 && chmod 750 ~/$1 && mkdir  -p ~/$1/${1##*/}.git && cd ~/$1/${1##*/}.git && git init --bare &&
+  echo '#!/bin/sh
+  GIT_WORK_TREE=../ git checkout -f' > hooks/post-receive && chmod +x hooks/post-receive"
+  # set remote variable
+  remote="server"
+  # if different remote is given reset
+  if [[ ! -z "$2" ]] ; then
+    remote=$2
+  fi
+  # check for remote, add and push up
+  if [[ remote != "false" ]] ; then
+    git remote add $remote $ssh_veare:~/$1/${1##*/}.git
+    while true; do
+        read -p "Do you want to push this branch ($(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')) upstream? " yn
+        case $yn in
+            [Yy]* ) git push --set-upstream $remote $(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,'):master; break;;
+            [Nn]* ) break;;
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
+  fi
+}
+
+# laravel artisan
+alias art="php artisan"
+alias phpunit="vendor/bin/phpunit"
+alias unit="vendor/bin/phpunit --stderr"
+alias dump="composer dump-autoload & art dump-autoload"
+
+# composer update
+function composer {
+  var_composer="/usr/local/bin/composer"
+	if [[ $1 == "update" ]] ; then
+		echo "Self update:"
+		$var_composer self-update
+		echo "Updating packages:"
+		$var_composer update
+	else
+		$var_composer "$@"
+	fi
+}
+
+# brew update
+function brew {
+	if [[ $1 == "update" ]] ; then
+    var_brew="/usr/local/bin/brew"
+		echo "${ORANGE}Updating brew...${RESET}"
+		$var_brew update
+		echo "${ORANGE}Upgrading formulas...${RESET}"
+		$var_brew upgrade
+		echo "${ORANGE}Cleaning up...${RESET}"
+		$var_brew cleanup
+		echo "${ORANGE}The doctor says...${RESET}"
+		$var_brew doctor
+	else
+		/usr/local/bin/brew "$@"
+	fi
+}
+
+
+# easy navigation
+alias cd-="cd -" ## move to previous dir, - also works
+
+# shortcuts
+alias c="clear"
+alias clrear="clear"
+alias clrea="clear"
+alias clrea="clear"
+
+# general directories
+alias p="cd ~/projects"
+alias sites="cd ~/projects"
+alias setup="cd ~/projects/_setup"
+alias packages="cd ~/projects/_packages"
+alias snippets="cd ~/projects/snippets"
+
+# Apache, MySQL & PHP
+alias check-apache="sudo apachectl -t"
+alias reapache="sudo apachectl restart"
+alias hosts="$EDITOR /etc/hosts"
+alias dns-cache="dscacheutil -flushcache"
+alias apachecnf="$EDITOR /etc/apache2/httpd.conf"
+alias vhosts="$EDITOR /etc/apache2/extra/httpd-vhosts.conf"
+alias phpini="$EDITOR /usr/local/etc/php/5.4/php.ini"
+
+# Detect which `ls` flavor is in use
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+	colorflag="--color"
+else # OS X `ls`
+	colorflag="-G"
+fi
+
+# better top
+alias top="top -o cpu"
+
+# list all files
+# -G -A=include hidden, but not . and ..; -F=/ after dir to mark it as such
+alias l='ls'
+alias ls='ls -GAF ${colorflag}'
+
+# List all files colorized in long format, including dot files
+alias ll="ls -laF ${colorflag}"
+
+# List only directories
+alias ld='ls -lF ${colorflag} | grep "^d"'
+
+# Enable aliases to be sudo’ed
+alias sudo='sudo '
+
+# Get week number
+alias week='date +%V'
+
+# Stopwatch
+alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+
+# IP addresses
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias lip="localip"
+alias localip="ipconfig getifaddr en1"
+alias ips="ifconfig -a | grep -o 'inet6\? \(\([0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+\)\|[a-fA-F0-9:]\+\)' | sed -e 's/inet6* //'"
+
+# Enhanced WHOIS lookups
+alias whois="whois -h whois-servers.net"
+
+# Empty the Trash on all mounted volumes and the main HDD
+# Also, clear Apple’s System Logs to improve shell startup speed
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
+
+# Show/hide hidden files in Finder
+alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+
+# Hide/show all desktop icons (useful when presenting)
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+############################
+# functions
+
+# Change working directory to the top-most Finder window location
+function cdf() { # short for `cdfinder`
+	cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')"
+}
+
+# reload file
+function reload {
+	if [[ $1 == "" ]] ; then
+		source ~/.bash_profile
+	elif [ -f ~/.${1#.} ]; then
+		source ~/.${1#.}
+	elif [ -f $dotFilePath.${1#.} ]; then
+		source $dotFilePath.$1
+	else
+		echo "File not found in: ~/.${1#.} and $dotFilePath.${1#.} not found."
+	fi
+}
+
+function js {
+  if [[ -d 'js' ]]; then
+    cd 'js';
+  elif [[ -d '../js' ]]; then
+    cd '../js'
+  elif [[ -d '../../js' ]]; then
+    cd '../../js'
+  elif [[ -d '../../../js' ]]; then
+    cd '../../../js'
+  elif [[ -d '../public/js' ]]; then
+    cd '../public/js'
+  elif [[ -d '../../public/js' ]]; then
+    cd '../../public/js'
+  elif [[ -d 'libs/js' ]]; then
+    cd 'libs/js'
+  elif [[ -d 'public/js' ]]; then
+    cd 'public/js'
+  elif [[ -d 'public/libs/js' ]]; then
+    cd 'public/libs/js'
+  fi
+}
+
+function css {
+  if [[ -d 'css' ]]; then
+    cd 'css';
+  elif [[ -d '../css' ]]; then
+    cd '../css'
+  elif [[ -d '../../css' ]]; then
+    cd '../../css'
+  elif [[ -d '../public/css' ]]; then
+    cd '../public/css'
+  elif [[ -d '../../public/css' ]]; then
+    cd '../../public/css'
+  elif [[ -d 'libs/css' ]]; then
+    cd 'libs/css'
+  elif [[ -d 'public/css' ]]; then
+    cd 'public/css'
+  elif [[ -d 'public/libs/css' ]]; then
+    cd 'public/libs/css'
+  fi
+}
+
+# Opens the github page for the current git repository in your browser
+# git@github.com:jasonneylon/dotfiles.git
+# https://github.com/jasonneylon/dotfiles/
+function gh() {
+  giturl=$(git config --get remote.origin.url)
+  if [ "$giturl" == "" ]
+    then
+     echo "Not a git repository or no remote.origin.url set"
+     exit 1;
+  fi
+
+  giturl=${giturl/git\@github\.com\:/https://github.com/}
+  giturl=${giturl/\.git/\/tree/}
+  echo $giturl
+  branch="$(git symbolic-ref HEAD 2>/dev/null)" ||
+  branch="(unnamed branch)"     # detached HEAD
+  branch=${branch##refs/heads/}
+  giturl=$giturl$branch
+  open $giturl
+}
+
+# Checks and opens readme
+function rd() {
+  if [ -f "readme.md" ]
+  then
+    open -a "/Applications/iA Writer.app" "readme.md"
+  elif [ -f "../readme.md" ]
+  then
+    open -a "/Applications/iA Writer.app" "../readme.md"
+  else
+    echo "readme.md not found."
+  fi
+}
+
+# make git repo
+function repo {
+  # set dir to current dir
+  dir="${PWD##*/}"
+  # if dir is given as argument
+  if [[ $# > 0 && $1 != -* ]]; then
+    dir=$1
+    if [[ -d $dir ]]; then
+      echo -e "Repository already exists."
+      read -p "Continue (y/n)? " choice
+      case "$choice" in
+        n|N ) echo "Aborting"
+              return;;
+        * ) echo "invalid";;
+      esac
+    fi
+    mkdir -p $dir
+		cd $dir
+  fi
+
+  #   # get github username
+  #   username=$(curl -s -S -u $repotoken:x-oauth-basic https://api.github.com/user | sed '/login/!d' | sed s/\"login\"://g | sed s/\"//g | sed s/\ //g | sed s/\,//g)
+  #   # exec
+  # if [[ $# -eq 0 ]]; then
+  #     echo "Creating repo: $dir"
+  #     # create github repo
+  #     curl -u $repotoken:x-oauth-basic https://api.github.com/user/repos -d '{"name":"'$dir'","description":""}'
+  #   else
+  #     dir=$1
+  #     echo "Creating repo: $dir"
+  #     echo "With description: $2"
+  #     # create github repo
+  #     curl -u $repotoken:x-oauth-basic https://api.github.com/user/repos -d '{"name":"'$dir'","description":"'$2'"}'
+  #     # make folder and move into it
+  #   mkdir $1
+  #   cd $1
+  #   fi
+  #   # add ignore file
+  #   if [[ "$1" == *--empty* || "$2" == *--empty* || "$3" == *--empty*  ]]; then
+  #     echo "Adding .gitignore file"
+  #     wget https://raw.github.com/lukasoppermann/base-setup/master/.gitignore
+  #   fi
+  #   # add base setup files
+  #   if [[ "$1" != *--empty* && "$2" != *--empty* && "$3" != *--empty* ]]; then
+  #     echo "Adding default files & folders from https://github.com/lukasoppermann/base-setup"
+  #     cd ..
+  #     git clone https://github.com/lukasoppermann/base-setup.git $dir
+  #     cd $dir
+  #     rm -rf .git
+  #     rm readme.md
+  #     # add grunt
+  #     if [[ $(node --version) > 0 && $(npm --version) > 0 && $(grunt --version) > 0 && "$*" != *--no-grunt* ]]; then
+  #       echo "Adding grunt"
+  #       grunt-init grunt-template
+  #     fi
+  #     rm -rf grunt-template
+  #   fi
+  #   # add readme
+  #   if [[ ! -f readme.md && "$*" != *--empty* ]]; then
+  #     echo "Creating readme.md"
+  #     echo -e "# $dir\n$2" > readme.md
+  #   fi
+  #   # init repo
+  #   git init
+  #   git add .
+  #   git commit -m 'init'
+  #   git remote add origin https://github.com/$username/$dir.git
+  #   git push -u origin master
+}
+
+# add ignore file from github to this repo
+function ignore {
+	wget https://raw.githubusercontent.com/lukasoppermann/knowledge-base/master/project/.gitignore
+}
+
+# `m` with no arguments opens the current directory in TextMate, otherwise
+# opens the given location
+function m() {
+	if [ $# -eq 0 ]; then
+		$EDITOR .
+	else
+		$EDITOR "$@";
+	fi
+}

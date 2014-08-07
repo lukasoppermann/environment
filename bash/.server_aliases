@@ -142,32 +142,5 @@ function css {
 
 # add ignore file from github to this repo
 function ignore {
-	wget https://raw.github.com/lukasoppermann/base-setup/master/.gitignore
-}
-
-function t {
-    if [[ $1 != -* ]]; then
-      echo $1
-    fi
-}
-
-# `m` with no arguments opens the current directory in TextMate, otherwise
-# opens the given location
-function m() {
-	if [ $# -eq 0 ]; then
-		mate .
-	else
-		mate "$@"
-	fi
-}
-
-# `o` with no arguments opens current directory, otherwise opens the given
-# location
-alias ,="o"
-function o() {
-	if [ $# -eq 0 ]; then
-		open .
-	else
-		open "$@"
-	fi
+	wget https://raw.githubusercontent.com/lukasoppermann/knowledge-base/master/project/.gitignore
 }
