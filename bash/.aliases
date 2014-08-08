@@ -100,6 +100,7 @@ alias c="clear"
 alias clrear="clear"
 alias clrea="clear"
 alias clrea="clear"
+alias o="open ."
 
 # general directories
 alias p="cd ~/projects"

@@ -29,19 +29,11 @@ function composer {
 	fi
 }
 
-# easy navigation
-alias ~="cd ~"  # `cd` is probably faster to type though
-alias cd-="cd -" ## move to previous dir, - also works
-alias ..="cd ../../"
-alias ...="cd ../../../"
-
 # shortcuts
 alias c="clear"
 alias clrear="clear"
 alias clrea="clear"
 alias clrea="clear"
-alias k="kill"
-alias k="killall"
 
 # general directories
 alias p="cd ~/"
@@ -63,24 +55,6 @@ alias ll="ls -laF ${colorflag}"
 
 # List only directories
 alias ld='ls -lF ${colorflag} | grep "^d"'
-
-# Enable aliases to be sudo’ed
-alias sudo='sudo '
-
-# Get week number
-alias week='date +%V'
-
-# Stopwatch
-alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
-
-# IP addresses
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias lip="localip"
-alias localip="ipconfig getifaddr en1"
-alias ips="ifconfig -a | grep -o 'inet6\? \(\([0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+\)\|[a-fA-F0-9:]\+\)' | sed -e 's/inet6* //'"
-
-# Enhanced WHOIS lookups
-alias whois="whois -h whois-servers.net"
 
 ############################
 # functions

@@ -38,6 +38,8 @@ alias discard="git stash save --keep-index; git stash drop"
 alias tag="git tag"
 alias tags="git tag"
 
+alias grm="git rm --cached -r"
+
 alias log="git log \$(cur_git_branch) --decorate --graph --oneline --date-order"
 alias hlog="git reflog"
 alias sub="git submodule"
@@ -60,4 +62,3 @@ function issues {
     fi
 	fi
 }
-
