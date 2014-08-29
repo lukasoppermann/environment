@@ -2,3 +2,6 @@
   'echo':
     'prefix': 'e'
     'body': 'echo $1${0:;}'
+  'print_r':
+    'prefix': 'pr'
+    'body': 'echo"<pre>";print_r($1);echo"<pre>";'

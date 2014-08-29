@@ -47,6 +47,15 @@ function parse_git_branch() {
 	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
 }
 
+# set title of terminal window to current folder
+base1="${PWD##*/}"
+dir1="${PWD%/*}"
+dir2="${PWD%/*/*}"
+dir3="${PWD%/*/*/*}"
+DIRNAME="${dir3##*/}/${dir2##*/}/${dir1##*/}/$base1"
+PROMPT_COMMAND='echo -ne "\033]0; /$DIRNAME\007"'
+
+
 # Use Git’s colored diff when available
 hash git &>/dev/null
 if [ $? -eq 0 ]; then
