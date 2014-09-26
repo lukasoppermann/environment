@@ -6,17 +6,11 @@
 *.orig
 _*.*
 _*/
-logs/
-log-
 0*_*/
-*cache*/*.php
-sessions/*.*
-**/storage/*
 images/
 media/
 movies/
 files/
-secret*
 
 # Grunt & bower #
 ############
@@ -32,8 +26,8 @@ database.php
 vendor/
 composer.lock
 CONTRIBUTING.md
-storage/sessions/*
-storage/views/*?
+storage/
+database/seeds/
 .env.local.php
 
 # Packages #
