@@ -18,8 +18,21 @@ alias exports="$EDITOR $dotFilePath.exports"
 alias ssh-veare="ssh -p 2222 veare@vea.re"
 
 function sh {
-    echo "ssh into df server"
-    ssh $ssh_veare;
+  echo "ssh into df server:"
+  ssh $ssh_veare;
+}
+
+function shdb {
+  read -p "Are you sure you want to migrate & seed the db for $1? (yes/No) " yn
+  if [[ $yn =~ ^[Yy]$ ]]; then
+    if(ssh $ssh_veare '[ -d clients/$1 ]'); then
+      echo "Migrating now..."
+      ssh $ssh_veare "cd clients/$1; /usr/local/bin/php5-55STABLE-CLI artisan migrate:refresh --force; /usr/local/bin/php5-55STABLE-CLI artisan db:seed --force"
+      echo "Migration done."
+    else
+      echo "The folder /clients/$1 folder does not exist."
+    fi
+  fi
 }
 
 alias shcp=sshcp
@@ -59,7 +72,20 @@ function sshprep {
 alias art="php artisan"
 alias phpunit="vendor/bin/phpunit"
 alias unit="vendor/bin/phpunit --stderr"
+alias phpspec="vendor/bin/phpspec"
 alias dump="composer dump-autoload & art dump-autoload"
+
+# build
+function build {
+  file="grunt-tasks/build.sh"
+  if [ -e "$file" ]; then
+    source $file
+  elif [ -e "public/$file" ]; then
+    source public/$file
+  else
+    echo "build.sh not found"
+  fi
+}
 
 # composer update
 function composer {
@@ -190,45 +216,26 @@ function reload {
 	fi
 }
 
-function js {
-  if [[ -d 'js' ]]; then
-    cd 'js';
-  elif [[ -d '../js' ]]; then
-    cd '../js'
-  elif [[ -d '../../js' ]]; then
-    cd '../../js'
-  elif [[ -d '../../../js' ]]; then
-    cd '../../../js'
-  elif [[ -d '../public/js' ]]; then
-    cd '../public/js'
-  elif [[ -d '../../public/js' ]]; then
-    cd '../../public/js'
-  elif [[ -d 'libs/js' ]]; then
-    cd 'libs/js'
-  elif [[ -d 'public/js' ]]; then
-    cd 'public/js'
-  elif [[ -d 'public/libs/js' ]]; then
-    cd 'public/libs/js'
-  fi
-}
-
-function css {
-  if [[ -d 'css' ]]; then
-    cd 'css';
-  elif [[ -d '../css' ]]; then
-    cd '../css'
-  elif [[ -d '../../css' ]]; then
-    cd '../../css'
-  elif [[ -d '../public/css' ]]; then
-    cd '../public/css'
-  elif [[ -d '../../public/css' ]]; then
-    cd '../../public/css'
-  elif [[ -d 'libs/css' ]]; then
-    cd 'libs/css'
-  elif [[ -d 'public/css' ]]; then
-    cd 'public/css'
-  elif [[ -d 'public/libs/css' ]]; then
-    cd 'public/libs/css'
+# find folder
+function f {
+  if [[ -d "$1" ]]; then
+    cd $1
+  elif [[ -d "../$1" ]]; then
+    cd ../$1
+  elif [[ -d "../../$1" ]]; then
+    cd ../../$1
+  elif [[ -d "../../../$1" ]]; then
+    cd ../../../$1
+  elif [[ -d "../../../../$1" ]]; then
+    cd ../../../../$1
+  elif [[ -d $(find . -name $1 -type d -maxdepth 1 -mindepth 1) ]]; then
+    cd $(find . -name $1 -type d -maxdepth 1 -mindepth 1)
+  elif [[ -d $(find . -name $1 -type d -maxdepth 2 -mindepth 2) ]]; then
+    cd $(find . -name $1 -type d -maxdepth 2 -mindepth 2)
+  elif [[ -d $(find . -name $1 -type d -maxdepth 3 -mindepth 3) ]]; then
+    cd $(find . -name $1 -type d -maxdepth 3 -mindepth 3)
+  elif [[ -d $(find . -name $1 -type d -maxdepth 4 -mindepth 4) ]]; then
+    cd $(find . -name $1 -type d -maxdepth 4 -mindepth 4)
   fi
 }
 
@@ -338,7 +345,7 @@ function repo {
 
 # add ignore file from github to this repo
 function ignore {
-	wget https://raw.githubusercontent.com/lukasoppermann/knowledge-base/master/project/.gitignore
+	wget https://raw.githubusercontent.com/lukasoppermann/knowledge-base/master/project-template/.gitignore
 }
 
 # `m` with no arguments opens the current directory in TextMate, otherwise

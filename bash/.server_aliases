@@ -10,6 +10,22 @@ function sshcp {
   echo "copying $server$1 to $2"
   scp $server$1 $2
 }
+
+# find folder
+function f {
+  if [[ -d "$1" ]]; then
+    cd $1
+  elif [[ -d "../$1" ]]; then
+    cd ../$1
+  elif [[ -d "../../$1" ]]; then
+    cd ../$1
+  elif [[ -d $(find . -name $1 -type d -quit) ]]; then
+    cd $(find . -name $1 -type d -quit)
+  else
+    cd $(find ~ -name $1 -type d)
+  fi
+}
+
 # laravel artisan
 alias art="php artisan"
 alias phpunit="vendor/bin/phpunit"
@@ -70,48 +86,6 @@ function reload {
 	else
 		echo "File not found in: ~/.${1#.} and $dotFilePath.${1#.} not found."
 	fi
-}
-
-function js {
-  if [[ -d 'js' ]]; then
-    cd 'js';
-  elif [[ -d '../js' ]]; then
-    cd '../js'
-  elif [[ -d '../../js' ]]; then
-    cd '../../js'
-  elif [[ -d '../../../js' ]]; then
-    cd '../../../js'
-  elif [[ -d '../public/js' ]]; then
-    cd '../public/js'
-  elif [[ -d '../../public/js' ]]; then
-    cd '../../public/js'
-  elif [[ -d 'libs/js' ]]; then
-    cd 'libs/js'
-  elif [[ -d 'public/js' ]]; then
-    cd 'public/js'
-  elif [[ -d 'public/libs/js' ]]; then
-    cd 'public/libs/js'
-  fi
-}
-
-function css {
-  if [[ -d 'css' ]]; then
-    cd 'css';
-  elif [[ -d '../css' ]]; then
-    cd '../css'
-  elif [[ -d '../../css' ]]; then
-    cd '../../css'
-  elif [[ -d '../public/css' ]]; then
-    cd '../public/css'
-  elif [[ -d '../../public/css' ]]; then
-    cd '../../public/css'
-  elif [[ -d 'libs/css' ]]; then
-    cd 'libs/css'
-  elif [[ -d 'public/css' ]]; then
-    cd 'public/css'
-  elif [[ -d 'public/libs/css' ]]; then
-    cd 'public/libs/css'
-  fi
 }
 
 # add ignore file from github to this repo

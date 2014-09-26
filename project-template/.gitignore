@@ -32,6 +32,9 @@ database.php
 vendor/
 composer.lock
 CONTRIBUTING.md
+storage/sessions/*
+storage/views/*?
+.env.local.php
 
 # Packages #
 ############
