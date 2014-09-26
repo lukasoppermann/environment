@@ -18,11 +18,19 @@ function f {
   elif [[ -d "../$1" ]]; then
     cd ../$1
   elif [[ -d "../../$1" ]]; then
-    cd ../$1
-  elif [[ -d $(find . -name $1 -type d -quit) ]]; then
-    cd $(find . -name $1 -type d -quit)
-  else
-    cd $(find ~ -name $1 -type d)
+    cd ../../$1
+  elif [[ -d "../../../$1" ]]; then
+    cd ../../../$1
+  elif [[ -d "../../../../$1" ]]; then
+    cd ../../../../$1
+  elif [[ -d $(find . -name $1 -type d -maxdepth 1 -mindepth 1) ]]; then
+    cd $(find . -name $1 -type d -maxdepth 1 -mindepth 1)
+  elif [[ -d $(find . -name $1 -type d -maxdepth 2 -mindepth 2) ]]; then
+    cd $(find . -name $1 -type d -maxdepth 2 -mindepth 2)
+  elif [[ -d $(find . -name $1 -type d -maxdepth 3 -mindepth 3) ]]; then
+    cd $(find . -name $1 -type d -maxdepth 3 -mindepth 3)
+  elif [[ -d $(find . -name $1 -type d -maxdepth 4 -mindepth 4) ]]; then
+    cd $(find . -name $1 -type d -maxdepth 4 -mindepth 4)
   fi
 }
 
