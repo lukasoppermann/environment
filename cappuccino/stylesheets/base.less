@@ -14,7 +14,16 @@
   }
 
   .indent-guide {
-    color: @syntax-indent-guide-color;
+    box-shadow: none !important;
+  }
+
+  .indent-guide:before{
+    display: block;
+    position: absolute;
+    content: "";
+    border-left: 1px dotted @syntax-indent-guide-color;
+    height: 100%;
+    width: 100%;
   }
 
   .invisible-character {
@@ -85,6 +94,9 @@
 
   &.control {
     color: @purple;
+    &.html.elements{
+      text-decoration: underline;
+    }
   }
 
   &.operator {
@@ -96,8 +108,15 @@
   }
 
   &.other.unit {
-    color: @orange;
+    color: @cyan;
   }
+}
+
+.property-name{
+  color: @green;
+}
+.property-value.css{
+  color: @light-orange;
 }
 
 .storage {
@@ -112,7 +131,7 @@
   }
 
   &.numeric {
-    color: @orange;
+    color: @light-orange;
   }
 
   &.other.color {

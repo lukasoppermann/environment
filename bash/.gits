@@ -25,11 +25,21 @@ alias rebase="git rebase -i"
 alias continue="git rebase --continue"
 alias add="git add"
 alias add.="git add --all"
-alias ca="git commit -am"
+
+function ca {
+	msg="update"
+	if [[ ! -z "$1" ]]; then
+		msg=$1
+	fi
+	git commit -am "$msg"
+}
+
 alias ck="git checkout"
-alias b="git branch -a"
+alias b="git branch"
+alias ba="git branch -a"
 alias cherry="git cherry-pick"
-alias dif="git diff"
+alias dif=diff
+alias diff="git diff"
 alias remote="git remote add"
 alias fetch="git fetch"
 alias conflicts="git diff --name-only --diff-filter=U"

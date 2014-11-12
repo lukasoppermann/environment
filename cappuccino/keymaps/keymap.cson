@@ -5,6 +5,7 @@
   'cmd-alt-+':'pane:split-right'
 '.editor':
   'alt-cmd-5': 'editor:outdent-selected-rows'
+  'alt-cmd-6': 'editor:indent-selected-rows'
   'cmd-l': 'go-to-line:toggle'
   'cmd-alt-l':'window:reload'
   'cmd-alt-n':'fancy-new-file:toggle'

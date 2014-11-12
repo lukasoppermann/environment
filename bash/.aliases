@@ -3,6 +3,7 @@ alias veare="cd ~/projects/veare"
 alias fs="cd ~/projects/formandsystem"
 alias mark="cd ~/projects/mark"
 alias copra="cd ~/projects/copra"
+alias cw="cd ~/projects/creative-web"
 
 # applications
 alias tt="open /Applications/TotalTerminal.app"
@@ -75,6 +76,21 @@ alias unit="vendor/bin/phpunit --stderr"
 alias phpspec="vendor/bin/phpspec"
 alias dump="composer dump-autoload & art dump-autoload"
 
+function l5dev {
+	if [[ ! -z "$1" ]] ; then
+		composer create-project laravel/laravel $1 dev-develop --prefer-dist
+	fi
+}
+
+function routes()
+{
+    if [ $# -eq 0 ]; then
+        php artisan route:list
+    else
+        php artisan route:list | grep ${1}
+    fi
+}
+
 # build
 function build {
   file="grunt-tasks/build.sh"
@@ -91,10 +107,15 @@ function build {
 function composer {
   var_composer="/usr/local/bin/composer"
 	if [[ $1 == "update" ]] ; then
-		echo "Self update:"
-		$var_composer self-update
-		echo "Updating packages:"
-		$var_composer update
+    if [[ ! -z $2 ]] ; then
+      echo "Updating package $2:"
+      $var_composer update $2
+    else
+		  echo "Self update:"
+		  $var_composer self-update
+		  echo "Updating packages:"
+		  $var_composer update
+    fi
 	else
 		$var_composer "$@"
 	fi
