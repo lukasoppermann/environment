@@ -1,0 +1,17 @@
+# GLOBAL gitignore #
+# ------------------
+# This file is the global gigignore file
+#################
+
+# Dev files #
+######################
+/node_modules
+build.sh
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+composer.phar

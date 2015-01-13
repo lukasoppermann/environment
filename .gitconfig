@@ -2,14 +2,14 @@
 	name = Lukas Oppermann
 	email = oppermann.lukas@googlemail.com
 [core]
-	editor = mate -w
+	editor = atom
 	excludesfile = /Users/lukasoppermann/sites/.gitignore_global
 
 [alias]
     ci = commit
     st = status
-    co = checkout
-    
+    ck = checkout
+
 [apply]
 	# Detect whitespace errors when applying a patch
 	whitespace = fix

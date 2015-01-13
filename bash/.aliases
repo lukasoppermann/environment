@@ -1,103 +1,80 @@
+# ---------------------- #
+# open bash files
+# ---------------------- #
+alias profile="$EDITOR ~/.bash_profile"
+alias aliases="$EDITOR $dotFilePath.aliases;"
+alias gits="$EDITOR $dotFilePath.gits"
+alias exports="$EDITOR $dotFilePath.exports"
+
+# ---------------------- #
 # project directories
+# ---------------------- #
 alias veare="cd ~/projects/veare"
 alias fs="cd ~/projects/formandsystem"
+alias cms="cd ~/projects/formandsystem/cms"
+alias api="cd ~/projects/formandsystem/api"
 alias mark="cd ~/projects/mark"
 alias copra="cd ~/projects/copra"
 alias cw="cd ~/projects/creative-web"
 
-# applications
-alias tt="open /Applications/TotalTerminal.app"
+# ---------------------- #
+# general directories
+# ---------------------- #
+alias p="cd ~/projects"
+alias setup="cd ~/projects/_setup"
+alias packages="cd ~/projects/_packages"
 
-# open bash files
-alias profile="$EDITOR ~/.bash_profile"
-alias aliases="$EDITOR $dotFilePath.aliases;"
-alias functions=aliases
-alias gits="$EDITOR $dotFilePath.gits"
-alias exports="$EDITOR $dotFilePath.exports"
+# ---------------------- #
+# dev & laravel
+# ---------------------- #
+alias bowerup="bower cache clean && bower update -f"
+alias art="php artisan"
+alias seed="php artisan db:seed"
+alias phpunit="vendor/bin/phpunit"
+alias unit="vendor/bin/phpunit --stderr"
+alias phpspec="vendor/bin/phpspec"
+alias dump="composer dump-autoload -o & art clear-compiled & echo 'is art dump-autoload still removed?'"
 
-# ssh access
-alias ssh-veare="ssh -p 2222 veare@vea.re"
-
+# ---------------------- #
+# SSH
+# ---------------------- #
+# ssh into veare
 function sh {
   echo "ssh into df server:"
   ssh $ssh_veare;
 }
+# project ssh veare
+alias sshcopra="ssh lukas@new.copra-system.de"
 
-function shdb {
-  read -p "Are you sure you want to migrate & seed the db for $1? (yes/No) " yn
-  if [[ $yn =~ ^[Yy]$ ]]; then
-    if(ssh $ssh_veare '[ -d clients/$1 ]'); then
-      echo "Migrating now..."
-      ssh $ssh_veare "cd clients/$1; /usr/local/bin/php5-55STABLE-CLI artisan migrate:refresh --force; /usr/local/bin/php5-55STABLE-CLI artisan db:seed --force"
-      echo "Migration done."
-    else
-      echo "The folder /clients/$1 folder does not exist."
-    fi
-  fi
-}
-
+# SSH Copy
 alias shcp=sshcp
-
 function sshcp {
   server="$ssh_veare:~/"
   echo "copying $1 to $server$2"
   scp $1 $server$2
 }
 
-function sshprep {
-  # create folder structure and git repo
-  ssh $ssh_veare "mkdir -p ~/$1 && chmod 750 ~/$1 && mkdir  -p ~/$1/${1##*/}.git && cd ~/$1/${1##*/}.git && git init --bare &&
-  echo '#!/bin/sh
-  GIT_WORK_TREE=../ git checkout -f' > hooks/post-receive && chmod +x hooks/post-receive"
-  # set remote variable
-  remote="server"
-  # if different remote is given reset
-  if [[ ! -z "$2" ]] ; then
-    remote=$2
-  fi
-  # check for remote, add and push up
-  if [[ remote != "false" ]] ; then
-    git remote add $remote $ssh_veare:~/$1/${1##*/}.git
-    while true; do
-        read -p "Do you want to push this branch ($(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')) upstream? " yn
-        case $yn in
-            [Yy]* ) git push --set-upstream $remote $(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,'):master; break;;
-            [Nn]* ) break;;
-            * ) echo "Please answer yes or no.";;
-        esac
-    done
-  fi
-}
 
-# laravel artisan
-alias art="php artisan"
-alias phpunit="vendor/bin/phpunit"
-alias unit="vendor/bin/phpunit --stderr"
-alias phpspec="vendor/bin/phpspec"
-alias dump="composer dump-autoload & art dump-autoload"
-
-function l5dev {
-	if [[ ! -z "$1" ]] ; then
-		composer create-project laravel/laravel $1 dev-develop --prefer-dist
-	fi
-}
-
-function routes()
-{
-    if [ $# -eq 0 ]; then
-        php artisan route:list
-    else
-        php artisan route:list | grep ${1}
-    fi
-}
-
-# build
+# ---------------------- #
+# Run Build script
+# TODO: replace with gulp ?
+# ---------------------- #
 function build {
-  file="grunt-tasks/build.sh"
-  if [ -e "$file" ]; then
-    source $file
-  elif [ -e "public/$file" ]; then
+  file="build.sh"
+	if [ -e "$file" ]; then
+		source $file
+	elif [ -e "public/$file" ]; then
     source public/$file
+	elif [ -e "grunt-tasks/$file" ]; then
+    source grunt-tasks/$file
+  elif [ -e "public/grunt-tasks/$file" ]; then
+    source public/grunt-tasks/$file
+	elif [ -e "htdocs/$file" ]; then
+    source htdocs</$file
+	elif [ -e "grunt-tasks/$file" ]; then
+    source grunt-tasks/$file
+  elif [ -e "htdocs/grunt-tasks/$file" ]; then
+    source htdocs/grunt-tasks/$file
   else
     echo "build.sh not found"
   fi
@@ -142,19 +119,16 @@ function brew {
 # easy navigation
 alias cd-="cd -" ## move to previous dir, - also works
 
+function root {
+	cd $(sed -E "s#($pwdDir$projectsDir/[^/]*)/.*#\1#" <<< $PWD)
+}
+
 # shortcuts
 alias c="clear"
 alias clrear="clear"
 alias clrea="clear"
 alias clrea="clear"
 alias o="open ."
-
-# general directories
-alias p="cd ~/projects"
-alias sites="cd ~/projects"
-alias setup="cd ~/projects/_setup"
-alias packages="cd ~/projects/_packages"
-alias snippets="cd ~/projects/snippets"
 
 # Apache, MySQL & PHP
 alias check-apache="sudo apachectl -t"
@@ -188,12 +162,6 @@ alias ld='ls -lF ${colorflag} | grep "^d"'
 
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
-
-# Get week number
-alias week='date +%V'
-
-# Stopwatch
-alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
@@ -292,76 +260,6 @@ function rd() {
   else
     echo "readme.md not found."
   fi
-}
-
-# make git repo
-function repo {
-  # set dir to current dir
-  dir="${PWD##*/}"
-  # if dir is given as argument
-  if [[ $# > 0 && $1 != -* ]]; then
-    dir=$1
-    if [[ -d $dir ]]; then
-      echo -e "Repository already exists."
-      read -p "Continue (y/n)? " choice
-      case "$choice" in
-        n|N ) echo "Aborting"
-              return;;
-        * ) echo "invalid";;
-      esac
-    fi
-    mkdir -p $dir
-		cd $dir
-  fi
-
-  #   # get github username
-  #   username=$(curl -s -S -u $repotoken:x-oauth-basic https://api.github.com/user | sed '/login/!d' | sed s/\"login\"://g | sed s/\"//g | sed s/\ //g | sed s/\,//g)
-  #   # exec
-  # if [[ $# -eq 0 ]]; then
-  #     echo "Creating repo: $dir"
-  #     # create github repo
-  #     curl -u $repotoken:x-oauth-basic https://api.github.com/user/repos -d '{"name":"'$dir'","description":""}'
-  #   else
-  #     dir=$1
-  #     echo "Creating repo: $dir"
-  #     echo "With description: $2"
-  #     # create github repo
-  #     curl -u $repotoken:x-oauth-basic https://api.github.com/user/repos -d '{"name":"'$dir'","description":"'$2'"}'
-  #     # make folder and move into it
-  #   mkdir $1
-  #   cd $1
-  #   fi
-  #   # add ignore file
-  #   if [[ "$1" == *--empty* || "$2" == *--empty* || "$3" == *--empty*  ]]; then
-  #     echo "Adding .gitignore file"
-  #     wget https://raw.github.com/lukasoppermann/base-setup/master/.gitignore
-  #   fi
-  #   # add base setup files
-  #   if [[ "$1" != *--empty* && "$2" != *--empty* && "$3" != *--empty* ]]; then
-  #     echo "Adding default files & folders from https://github.com/lukasoppermann/base-setup"
-  #     cd ..
-  #     git clone https://github.com/lukasoppermann/base-setup.git $dir
-  #     cd $dir
-  #     rm -rf .git
-  #     rm readme.md
-  #     # add grunt
-  #     if [[ $(node --version) > 0 && $(npm --version) > 0 && $(grunt --version) > 0 && "$*" != *--no-grunt* ]]; then
-  #       echo "Adding grunt"
-  #       grunt-init grunt-template
-  #     fi
-  #     rm -rf grunt-template
-  #   fi
-  #   # add readme
-  #   if [[ ! -f readme.md && "$*" != *--empty* ]]; then
-  #     echo "Creating readme.md"
-  #     echo -e "# $dir\n$2" > readme.md
-  #   fi
-  #   # init repo
-  #   git init
-  #   git add .
-  #   git commit -m 'init'
-  #   git remote add origin https://github.com/$username/$dir.git
-  #   git push -u origin master
 }
 
 # add ignore file from github to this repo
