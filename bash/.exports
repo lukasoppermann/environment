@@ -1,6 +1,6 @@
 # Set Editor to textmate
 # export EDITOR="/usr/local/bin/mate -w"
-export EDITOR="atom"
+export EDITOR="atom -w"
 
 # Set Path for PHP
 export PATH="$(brew --prefix)/bin:$PATH"

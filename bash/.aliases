@@ -21,7 +21,9 @@ alias cw="cd ~/projects/creative-web"
 # general directories
 # ---------------------- #
 alias p="cd ~/projects"
-alias setup="cd ~/projects/_setup"
+alias setup=environment
+alias env=environment
+alias environment="cd ~/projects/_environment"
 alias packages="cd ~/projects/_packages"
 
 # ---------------------- #
