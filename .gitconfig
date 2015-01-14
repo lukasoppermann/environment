@@ -1,9 +1,9 @@
 [user]
 	name = Lukas Oppermann
-	email = oppermann.lukas@googlemail.com
+	email = lukas@vea.re
 [core]
 	editor = atom
-	excludesfile = /Users/lukasoppermann/sites/.gitignore_global
+	excludesfile = /Users/lukasoppermann/projects/_environment/.gitignore_global
 
 [alias]
     ci = commit
@@ -13,18 +13,9 @@
 [apply]
 	# Detect whitespace errors when applying a patch
 	whitespace = fix
-
-[core]
-	# Use custom `.gitignore` and `.gitattributes`
-	excludesfile = ~/.gitignore
-	attributesfile = ~/.gitattributes
-	# Treat spaces before tabs, lines that are indented with 8 or more spaces, and
-	# all kinds of trailing whitespace as an error.
-	# [default] trailing-space: looks for spaces at the end of a line
-	# [default] space-before-tab: looks for spaces before tabs at the beginning of
-	# a line
-	whitespace = space-before-tab,indent-with-non-tab,trailing-space
-
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
 [color]
 	# Use colors in Git commands that are capable of colored output when
 	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
@@ -48,4 +39,7 @@
 [credential]
 	helper = osxkeychain
 [push]
-	default = simple
+	default = current
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
