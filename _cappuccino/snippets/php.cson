@@ -1,0 +1,27 @@
+'*':
+  'namespace':
+    'prefix':'ns'
+    'body':"""
+      <?php namespace ${1:Formandsystemapi\\$2};
+    """
+'.source.php, .source.html, .text.html.blade, .source.blade.php':
+  'echo':
+    'prefix': 'e'
+    'body': 'echo $1${0:;}'
+  'print_r':
+    'prefix': 'pr'
+    'body': 'echo"<pre>";print_r($1);echo"<pre>";'
+  'method':
+    'prefix': 'met'
+    'body': """
+      /**
+       * ${1:methodName}
+       *
+       * ${4:@var ${3:varName}}
+       * @return $5
+       */
+      public function $1($3)
+      {
+
+      }
+    """

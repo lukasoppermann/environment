@@ -11,7 +11,9 @@ cur_git_branch() {
 function push {
   if [[ $1 == "tags" || $1 == "tag" ]]; then
     git push --tags origin $(cur_git_branch)
-  elif [[ ($1 == "-f" && ($2 == "tag" || $2 == "tags")) || ($2 == "-f" && ($1 == "tag" || $1 == "tags")) ]]; then
+  elif [[ ($1 == "-f" && ($2 == "tag" || $2 == "tags")) ]]; then
+    git push -f --tags origin $(cur_git_branch)
+  elif [[ ($1 == "tag" || $1 == "tags") && $2 == "-f" ]]; then
     git push -f --tags origin $(cur_git_branch)
 	elif [[ $1 == "-f" ]]; then
     git push origin $(cur_git_branch) -f

@@ -1,0 +1,29 @@
+'*':
+  'HTML 5 Skeleton':
+    'prefix': 'html5'
+    'body': """
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <meta name="author" content="${1:Lukas Oppermann – vea.re}">
+        <meta name="description" content="$2">
+        <meta name="robots" content="index,follow">
+        <!-- mobile devices -->
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1" name="viewport">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1,maximum-scale=1">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <!-- title -->
+        <title>$3</title>
+      </head>
+      <body>
+      $0
+      </body>
+    </html>
+    """
+  'Arrow right':
+    'prefix': '->'
+    'body': '➞'
+  'Lorem':
+    'prefix': 'Lorem'
+    'body': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'

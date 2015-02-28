@@ -9,22 +9,24 @@ alias exports="$EDITOR $dotFilePath.exports"
 # ---------------------- #
 # project directories
 # ---------------------- #
-alias veare="cd ~/projects/veare"
-alias fs="cd ~/projects/formandsystem"
-alias cms="cd ~/projects/formandsystem/cms"
-alias api="cd ~/projects/formandsystem/api"
-alias mark="cd ~/projects/mark"
-alias copra="cd ~/projects/copra"
-alias cw="cd ~/projects/creative-web"
-
+alias veare="cd ~/code/veare"
+alias fs="cd ~/code/formandsystem"
+alias cms="cd ~/code/formandsystem/cms"
+alias api="cd ~/code/formandsystem/api"
+alias mark="cd ~/code/mark"
+alias copra="cd ~/code/copra"
+alias cw="cd ~/code/creative-web"
+alias nestable=nest
+alias nest="cd ~/code/nestable"
 # ---------------------- #
 # general directories
 # ---------------------- #
-alias p="cd ~/projects"
+alias p="cd ~/code"
+alias code="cd ~/code"
 alias setup=environment
 alias env=environment
-alias environment="cd ~/projects/_environment"
-alias packages="cd ~/projects/_packages"
+alias environment="cd ~/code/_environment"
+alias packages="cd ~/code/_packages"
 
 # ---------------------- #
 # dev & laravel
@@ -36,7 +38,7 @@ alias phpunit="vendor/bin/phpunit"
 alias unit="vendor/bin/phpunit --stderr"
 alias phpspec="vendor/bin/phpspec"
 alias dump="composer dump-autoload -o & art clear-compiled & echo 'is art dump-autoload still removed?'"
-
+alias intern="./node_modules/.bin/intern-client config=tests/intern"
 # ---------------------- #
 # SSH
 # ---------------------- #

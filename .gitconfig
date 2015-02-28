@@ -3,7 +3,7 @@
 	email = lukas@vea.re
 [core]
 	editor = atom
-	excludesfile = /Users/lukasoppermann/projects/_environment/.gitignore_global
+	excludesfile = ~/code/_environment/.gitignore_global
 
 [alias]
     ci = commit
