@@ -5,24 +5,25 @@ alias profile="$EDITOR ~/.bash_profile"
 alias aliases="$EDITOR $dotFilePath.aliases;"
 alias gits="$EDITOR $dotFilePath.gits"
 alias exports="$EDITOR $dotFilePath.exports"
+alias kdiff="git mergetool -y -t Kaleidoscope"
 
 # ---------------------- #
 # project directories
 # ---------------------- #
 alias veare="cd ~/code/veare"
-alias fs="cd ~/code/formandsystem"
-alias cms="cd ~/code/formandsystem/cms"
-alias api="cd ~/code/formandsystem/api"
+alias fs="cd ~/code/formandsystem-cms"
+alias cms="cd ~/code/formandsystem-cms"
+alias api="cd ~/code/formandsystem-api"
 alias mark="cd ~/code/mark"
 alias copra="cd ~/code/copra"
-alias cw="cd ~/code/creative-web"
-alias nestable=nest
-alias nest="cd ~/code/nestable"
+alias bosch="cd ~/projects/Bosch"
 # ---------------------- #
 # general directories
 # ---------------------- #
 alias p="cd ~/code"
+alias co="cd ~/code"
 alias code="cd ~/code"
+alias pr="cd ~/Projects"
 alias setup=environment
 alias env=environment
 alias environment="cd ~/code/_environment"
@@ -37,7 +38,7 @@ alias seed="php artisan db:seed"
 alias phpunit="vendor/bin/phpunit"
 alias unit="vendor/bin/phpunit --stderr"
 alias phpspec="vendor/bin/phpspec"
-alias dump="composer dump-autoload -o & art clear-compiled & echo 'is art dump-autoload still removed?'"
+alias dump="composer dump-autoload -o & art clear-compiled"
 alias intern="./node_modules/.bin/intern-client config=tests/intern"
 # ---------------------- #
 # SSH

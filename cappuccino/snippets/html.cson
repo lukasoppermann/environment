@@ -1,4 +1,0 @@
-'.source.php, .source.html, .text.html, .text.html.blade, .source.blade.php':
-  'link a css file':
-    'prefix': 'css'
-    'body': """<link rel="stylesheet" href="${1:/css/master.css}">"""
